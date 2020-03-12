@@ -1,8 +1,8 @@
-#Neural Network
+<h1>Neural Network</h1>
 
 This repository contains a code for a Neural Network class designed to be an object of learning.
 
-##How to use
+<h2>How to use</h2>
 
 To compile a code which use the Neural Network library it's recommended the us of the Makefile script. It contains two (2) modifiable variables:
 
@@ -15,7 +15,7 @@ Therefore, to compile a code:
 
 If the Project name is not provided its name will be "neural_network"
 
-##Running an example
+<h2>Running an example</h2>
 
 The example which we will run here is the "xor" one, an application responsible to emulate a xor logic port.
 
