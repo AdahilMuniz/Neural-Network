@@ -28,7 +28,13 @@ CC_FLAGS=-c         \
 all: $(PROJ_NAME)
  
 $(PROJ_NAME): $(OBJ)
+ifneq ("$(wildcard $(dir $(APP_FILE))/Makefile)","")
+	cd $(dir $(APP_FILE)) && make PROJ_NAME=$(PROJ_NAME)
+	mv $(dir $(APP_FILE))/$(PROJ_NAME) .
+else
 	$(CPP) -o $@ $^ $(APP_FILE) -I $(LIB_DIR)
+endif
+
 
 %.o: %.c %.h
 	$(CPP) -o $@ $< $(CC_FLAGS)

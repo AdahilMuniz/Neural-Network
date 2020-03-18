@@ -18,7 +18,7 @@ NeuralNetwork::NeuralNetwork(const vector<unsigned> &topology){
         //Insert Neurons
         for (unsigned j = 0; j <= topology[i]; ++j){
             layers.back().push_back(Neuron(numNeuronOutputs, j));
-            cout << "Neuron Made!" << endl;
+            //cout << "Neuron Made!" << endl;
         }
 
         layers.back().back().setOutput(1.0);
