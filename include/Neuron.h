@@ -41,7 +41,7 @@ public:
 
 
     static double randomWeight(void) { return rand()/double(RAND_MAX); }
-    static double transferFunction(double x) { return NeuralMath::hipTan(x); } //Compiler, do your magic.
-    static double transferFunctionDerivative(double x) { return NeuralMath::hipTanDerivative(x); } //Compiler, do your magic.
+    static double transferFunction(double x) { return NeuralMath::sigmoid(x); } //Compiler, do your magic.
+    static double transferFunctionDerivative(double x) { return NeuralMath::sigmoidDerivative(x); } //Compiler, do your magic.
     
 };

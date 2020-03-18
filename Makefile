@@ -2,13 +2,13 @@
 PROJ_NAME?=neural_network
 
 # Application File
-APP_FILE?=./example/xor/xor.cpp 
+APP_FILE?=./examples/xor/xor.cpp 
 
 # .c files
 C_SOURCE=$(wildcard ./src/*.cpp)
  
 # .h files
-H_SOURCE=$(wildcard ./header/*.h)
+H_SOURCE=$(wildcard ./include/*.h)
  
 # Object files
 OBJ=$(C_SOURCE:.c=.o)
@@ -17,18 +17,18 @@ OBJ=$(C_SOURCE:.c=.o)
 CPP=g++
 
 # Lib Directory
-LIB_DIR="./header/"
+LIB_DIR="./include/"
 
 # Flags for compiler
 CC_FLAGS=-c         \
          -W         \
-         -Wall      
+         -Wall      \
 
 
 all: $(PROJ_NAME)
  
 $(PROJ_NAME): $(OBJ)
-	$(CPP) -o $@ $^ $(APP_FILE) -I $(LIB_DIR) 
+	$(CPP) -o $@ $^ $(APP_FILE) -I $(LIB_DIR)
 
 %.o: %.c %.h
 	$(CPP) -o $@ $< $(CC_FLAGS)
