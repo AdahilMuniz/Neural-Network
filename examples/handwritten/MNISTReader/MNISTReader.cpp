@@ -130,7 +130,7 @@ int MNISTReader::loadTest(){
 
    
    //Open Training Label File
-    ifstream rftl(train_label_path, ios::out | ios::binary);
+    ifstream rftl(test_label_path, ios::out | ios::binary);
 
     if(!rftl) {
       cout << "Cannot open Tainning Label File!" << endl;

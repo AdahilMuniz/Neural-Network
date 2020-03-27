@@ -44,9 +44,25 @@ vector<double> to_onehot(char val){
     
     result[(int)val] = 1.0;
 
-    //print_result(result);
-
     return result;
+}
+
+bool test_error(vector<double> result, char target){
+    double  max = 0.0;
+    int     i_result;
+
+    for (int i = 0; i < result.size(); ++i){
+        if (result[i] > max){
+            max = result[i];
+            i_result = i;
+        }
+    }
+
+    if (i_result != (int)target){
+        return true;
+    }
+
+    return false;
 }
 
 int main(int argc, char const **argv){
@@ -63,9 +79,13 @@ int main(int argc, char const **argv){
     vector<double> input_pixels_test;
     vector<double> resultVals;
 
+    //Error
+    double error_r  = 0.0;
+    int    nb_error = 0;
+
     //Network
     topology.push_back(784);
-    topology.push_back(15);
+    topology.push_back(60);
     topology.push_back(10);
 
     NeuralNetwork net(topology);
@@ -89,17 +109,32 @@ int main(int argc, char const **argv){
     }
 
     //Test
+    for (int i = 0; i < testData.item_number; ++i){
+        input_pixels_test = to_bw(testData.images[i]);
+        net.feedForward(input_pixels_test);
+        net.getResults(resultVals);
+
+        if(test_error(resultVals, testData.values[i])){
+            nb_error ++;
+        }
+    }
+
+    error_r = ((double)nb_error/testData.item_number)*100;
+    cout << "Error Rate: " << error_r << "%" <<endl;
+
+    cout << "Visual Test" << endl;
     input_pixels_test = to_bw(testData.images[0]);
     net.feedForward(input_pixels_test);
     net.getResults(resultVals);
 
     print_result(resultVals);
-
+    test_error(resultVals, testData.values[0]);
 
     const cv::Mat img(cv::Size(28, 28), CV_8U, testData.images[0].pixels);
     cv::namedWindow("Handwritten");
     cv::imshow("Handwritten", img);
     cv::waitKey(0);
+
 
     return 0;
 }
