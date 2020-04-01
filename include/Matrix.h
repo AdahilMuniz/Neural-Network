@@ -25,13 +25,20 @@ public:
 
     void print();
 
-    Matrix operator * (Matrix const &m);
+    Matrix operator * (Matrix const &mop);
+    Matrix operator * (double const &op);
+    Matrix operator - (Matrix const &mop);
+    Matrix operator - (double const &op);
+    Matrix operator + (Matrix const &mop);
+    Matrix operator + (double const &op);
+
+
     void   transpose();
     
 };
 
-/*
 
+/*
 int main(int argc, char const *argv[])
 {
 
@@ -45,6 +52,7 @@ int main(int argc, char const *argv[])
     Matrix m3;
 
     m3 = m1*m2;
+    m3 = m1+3;
 
     m3.print();
 

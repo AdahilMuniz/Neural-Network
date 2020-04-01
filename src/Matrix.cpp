@@ -57,6 +57,93 @@ Matrix Matrix::operator * (Matrix const &mop){
     return * mr;
 }
 
+Matrix Matrix::operator * (double const &a){
+    Matrix mr(nbr, nbc);
+    double * result = new (nothrow) double [nbr * nbc];
+
+    #pragma omp for
+    for (int i = 0; i < nbr * nbc; ++i){
+        result[i] = values[i]*a;
+    }
+    mr.setValues(result);
+
+    return mr;
+
+}
+
+Matrix Matrix::operator - (Matrix const &mop){
+    Matrix mr(nbr, nbc);
+    double * result = new (nothrow) double [nbr * nbc];
+
+    if (nbc != mop.nbr || nbc != mop.nbc){
+        return mr;
+    }
+    
+    #pragma omp for
+    for (int i = 0; i < nbr * nbc; ++i){
+        result[i] = values[i]-mop.values[i];
+    }
+    mr.setValues(result);
+
+    //printf("Time to multiply the matrices A(%dx%d) and B(%dx%d): %f\n", m,n,n,p, omp_get_wtime()-  wall_timer);
+
+    return mr;
+}
+
+
+
+Matrix Matrix::operator - (double const &a){
+    Matrix mr(nbr, nbc);
+    double * result = new (nothrow) double [nbr * nbc];
+    
+    #pragma omp for
+    for (int i = 0; i < nbr * nbc; ++i){
+        result[i] = values[i]-a;
+    }
+    mr.setValues(result);
+
+    //printf("Time to multiply the matrices A(%dx%d) and B(%dx%d): %f\n", m,n,n,p, omp_get_wtime()-  wall_timer);
+
+    return mr;
+}
+
+Matrix Matrix::operator + (Matrix const &mop){
+    Matrix mr(nbr, nbc);
+    double * result = new (nothrow) double [nbr * nbc];
+
+    if (nbc != mop.nbr || nbc != mop.nbc){
+        return mr;
+    }
+    
+    #pragma omp for
+    for (int i = 0; i < nbr * nbc; ++i){
+        result[i] = values[i]+mop.values[i];
+    }
+    mr.setValues(result);
+
+    //printf("Time to multiply the matrices A(%dx%d) and B(%dx%d): %f\n", m,n,n,p, omp_get_wtime()-  wall_timer);
+
+    return mr;
+}
+
+
+
+Matrix Matrix::operator + (double const &a){
+    Matrix mr(nbr, nbc);
+    double * result = new (nothrow) double [nbr * nbc];
+    
+    #pragma omp for
+    for (int i = 0; i < nbr * nbc; ++i){
+        result[i] = values[i]+a;
+    }
+    mr.setValues(result);
+
+    //printf("Time to multiply the matrices A(%dx%d) and B(%dx%d): %f\n", m,n,n,p, omp_get_wtime()-  wall_timer);
+
+    return mr;
+}
+
+
 void Matrix::transpose(){
     double * result = new (nothrow) double [nbr * nbc];
 
