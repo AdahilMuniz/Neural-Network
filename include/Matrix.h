@@ -10,10 +10,12 @@ using namespace std;
 class Matrix
 {
 private:
+
+public:
+
     double * values;
     int nbr, nbc;
 
-public:
     Matrix(int _nbr, int _nbc, double * _values);
     Matrix(double * _values);
     Matrix();
@@ -22,6 +24,9 @@ public:
 
     void setValues(double * _values){ values = _values; };
     void setDim(int _nbr, int _nbc);
+
+    double * getValues() const { return values; }
+    void    getDim(int * dim);
 
     void print();
 
@@ -33,7 +38,7 @@ public:
     Matrix operator + (double const &op);
 
 
-    void   transpose();
+    Matrix transpose();
     
 };
 
@@ -60,5 +65,11 @@ int main(int argc, char const *argv[])
     cout << "\n";
     m3.print();
 
+    int a[2];
+
+    m3.getDim(a);
+    cout << "Dim: " << a[0] << endl;
+
     return 0;
-}*/
+}
+*/

@@ -10,7 +10,7 @@ Matrix::Matrix(int _nbr, int _nbc, double * _values){
 Matrix::Matrix(int _nbr, int _nbc){
     nbr    = _nbr;
     nbc    = _nbc;
-    //values = new (nothrow) double [nbr*nbc]; 
+    values = new (nothrow) double [nbr*nbc]; 
 }
 
 Matrix::Matrix(){
@@ -25,6 +25,12 @@ void Matrix::setDim(int _nbr, int _nbc){
     nbr    = _nbr;
     nbc    = _nbc;
     values = new (nothrow) double [nbr*nbc];
+}
+
+void Matrix::getDim(int * dim){
+    cout << "NBR: " << nbr << endl;
+    dim[0] = nbr;
+    dim[1] = nbc;
 }
 
 Matrix Matrix::operator * (Matrix const &mop){
@@ -70,6 +76,7 @@ Matrix Matrix::operator * (double const &a){
     return mr;
 
 }
+
 
 Matrix Matrix::operator - (Matrix const &mop){
     Matrix mr(nbr, nbc);
@@ -144,7 +151,8 @@ Matrix Matrix::operator + (double const &a){
 }
 
 
-void Matrix::transpose(){
+Matrix Matrix::transpose(){
+    Matrix mr(nbr, nbc);
     double * result = new (nothrow) double [nbr * nbc];
 
     #pragma omp for
@@ -153,8 +161,9 @@ void Matrix::transpose(){
             result[i + j*nbr] = values[j + i*nbc];
         }
     }
-    swap(nbr, nbc);
-    values = result;
+    //swap(nbr, nbc);
+    //values = result;
+    mr.setValues(result);
 }
 
 void Matrix::print(){
