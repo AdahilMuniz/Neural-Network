@@ -1,3 +1,6 @@
+#ifndef MATRIX_H
+#define MATRIX_H
+
 #include <iostream>
 #include <omp.h>
 #include <vector>
@@ -10,10 +13,12 @@ using namespace std;
 class Matrix
 {
 private:
+
+public:
+
     double * values;
     int nbr, nbc;
 
-public:
     Matrix(int _nbr, int _nbc, double * _values);
     Matrix(double * _values);
     Matrix();
@@ -22,6 +27,9 @@ public:
 
     void setValues(double * _values){ values = _values; };
     void setDim(int _nbr, int _nbc);
+
+    double * getValues() const { return values; }
+    void    getDim(int * dim);
 
     void print();
 
@@ -32,11 +40,12 @@ public:
     Matrix operator + (Matrix const &mop);
     Matrix operator + (double const &op);
 
-
-    void   transpose();
+    Matrix point(Matrix const &mop);
+    Matrix transpose();
     
 };
 
+#endif
 
 /*
 int main(int argc, char const *argv[])
@@ -49,16 +58,14 @@ int main(int argc, char const *argv[])
 
     Matrix m1(4,3,(double *) m_val);
     Matrix m2(3,3,(double *) m_val);
-    Matrix m3;
+    Matrix * m3;
 
-    m3 = m1*m2;
-    m3 = m1+3;
+    m3 = new Matrix();
 
-    m3.print();
+    *m3 = m1*m2;
 
-    m3.transpose();
-    cout << "\n";
-    m3.print();
+    cout << "NBR: " << m3->nbc << " NBC: " << m3->nbr << endl;
 
     return 0;
-}*/
+}
+*/

@@ -10,11 +10,11 @@ Matrix::Matrix(int _nbr, int _nbc, double * _values){
 Matrix::Matrix(int _nbr, int _nbc){
     nbr    = _nbr;
     nbc    = _nbc;
-    //values = new (nothrow) double [nbr*nbc]; 
+    values = new (nothrow) double [nbr*nbc]; 
 }
 
 Matrix::Matrix(){
-
+    //
 }
 
 Matrix::~Matrix(){
@@ -27,9 +27,14 @@ void Matrix::setDim(int _nbr, int _nbc){
     values = new (nothrow) double [nbr*nbc];
 }
 
+void Matrix::getDim(int * dim){
+    cout << "NBR: " << nbr << endl;
+    dim[0] = nbr;
+    dim[1] = nbc;
+}
+
 Matrix Matrix::operator * (Matrix const &mop){
-    Matrix * mr = new Matrix();
-    double * result = new (nothrow) double [nbr * mop.nbc];
+    Matrix * mr;// = new Matrix();
     int n,m,p;
 
     if (nbc != mop.nbr){
@@ -46,11 +51,10 @@ Matrix Matrix::operator * (Matrix const &mop){
     for (int i = 0; i < m; ++i){
         for (int j = 0; j < p; ++j){
             for (int k = 0; k < n; ++k){
-                result[p*i + j] += values[i*n + k]*mop.values[k*p + j];
+                mr->values[p*i + j] += values[i*n + k]*mop.values[k*p + j];
             }
         }
     }
-    mr->setValues(result);
 
     //printf("Time to multiply the matrices A(%dx%d) and B(%dx%d): %f\n", m,n,n,p, omp_get_wtime()-  wall_timer);
 
@@ -70,6 +74,7 @@ Matrix Matrix::operator * (double const &a){
     return mr;
 
 }
+
 
 Matrix Matrix::operator - (Matrix const &mop){
     Matrix mr(nbr, nbc);
@@ -143,18 +148,32 @@ Matrix Matrix::operator + (double const &a){
     return mr;
 }
 
-
-void Matrix::transpose(){
+Matrix Matrix::point (Matrix const &mop){
+    Matrix mr(nbr, nbc);
     double * result = new (nothrow) double [nbr * nbc];
+
+    if (nbc != mop.nbr || nbc != mop.nbc){
+        return mr;
+    }
+    
+    #pragma omp for
+    for (int i = 0; i < nbr * nbc; ++i){
+        mr.values[i] = values[i]*mop.values[i];
+    }
+
+    return mr;
+}
+
+Matrix Matrix::transpose(){
+    Matrix mr(nbc, nbr);
 
     #pragma omp for
     for (int i = 0; i < nbr; ++i){
         for (int j = 0; j < nbc; ++j){
-            result[i + j*nbr] = values[j + i*nbc];
+            mr.values[i + j*nbr] = values[j + i*nbc];
         }
     }
-    swap(nbr, nbc);
-    values = result;
+    return mr;
 }
 
 void Matrix::print(){

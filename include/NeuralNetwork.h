@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Neuron.h"
+#include "Matrix.h"
+#include "Layer.h"
 
 #include <vector>
 #include <iostream>
@@ -12,14 +13,20 @@ class NeuralNetwork {
 private:
     vector<Layer> layers;
     double error;
-
+    double eta = 0.15;
 public:
     NeuralNetwork(const vector<unsigned> &topology);
-    //NeuralNetwork();
     ~NeuralNetwork();
     
-    void feedForward(const vector<double> &inputs);
-    void backProp   (const vector<double> &targets);
-    void getResults (vector<double> &result) const;
+    void feedForward(Matrix * min);
+    void backProp   (Matrix * min, Matrix * mtarget);
+    Matrix * getResults () const;
 
 };
+
+/*
+int main(int argc, char const *argv[])
+{
+    return 0;
+}
+*/

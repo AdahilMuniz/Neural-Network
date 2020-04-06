@@ -23,6 +23,7 @@ LIB_DIR="./include/"
 CC_FLAGS=-c         \
          -W         \
          -Wall      \
+         -fopenmp   \
 
 
 all: $(PROJ_NAME)
