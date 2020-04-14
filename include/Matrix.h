@@ -22,7 +22,7 @@ public:
     Matrix(int _nbr, int _nbc, double * _values);
     Matrix(double * _values);
     Matrix();
-    Matrix(int _nbr, int _nbc);
+    Matrix(int _nbr, int _nbc, char cont = '0');
     ~Matrix();
 
     void setValues(double * _values){ values = _values; };
@@ -40,32 +40,12 @@ public:
     Matrix operator + (Matrix const &mop);
     Matrix operator + (double const &op);
 
+    Matrix concatenate(Matrix const &mop, bool axis = 0);
+    Matrix concatenate(Matrix *mop, bool axis = 0);
+
     Matrix point(Matrix const &mop);
     Matrix transpose();
     
 };
 
 #endif
-
-/*
-int main(int argc, char const *argv[])
-{
-
-    double m_val [][3] = {{1.0,2.0,3.0},
-                     {4.0,5.0,6.0},
-                     {7.0,8.0,9.0},
-                     {7.0,8.0,9.0}};
-
-    Matrix m1(4,3,(double *) m_val);
-    Matrix m2(3,3,(double *) m_val);
-    Matrix * m3;
-
-    m3 = new Matrix();
-
-    *m3 = m1*m2;
-
-    cout << "NBR: " << m3->nbc << " NBC: " << m3->nbr << endl;
-
-    return 0;
-}
-*/

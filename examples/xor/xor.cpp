@@ -3,14 +3,22 @@
 #include "NeuralNetwork.h"
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
 
 using namespace std;
 
 int main(int argc, char const **argv){
+
+    if (argc < 4){
+        cout << "Provide enough arguments" << endl;
+        return 0;
+    }
+
     ifstream infile_train(argv[1]);
     ifstream infile_test (argv[2]);
 
     double a, b, c;
+    int epoch = atoi(argv[3]);
 
     vector<unsigned> topology;
     topology.push_back(2);
@@ -27,27 +35,15 @@ int main(int argc, char const **argv){
     //Trainning data
     while(infile_train >> a >> b >> c){
 
-        //inputVals.clear();
-        //targetValues.clear();
-
         inputVals.push_back(a);
         inputVals.push_back(b);
         targetValues.push_back(c);
-    
-        /*
-        net.backProp(targetValues);
-    
-        net.getResults(resultValues);
-
-        cout << "Inputs : " << a << " " << b << endl;
-        cout << "Result:" << resultValues.back() << endl;
-        */
     }
 
     min     = new Matrix(inputVals.size()/2,2, &inputVals[0]);
     mtarget = new Matrix(targetValues.size()/1,1, &targetValues[0]);
 
-    net.backProp(min, mtarget);
+    net.backProp(min, mtarget, epoch);
     
     inputVals.clear();
     targetValues.clear();
@@ -62,14 +58,10 @@ int main(int argc, char const **argv){
 
     mintest = new Matrix(inputVals.size()/2,2, &inputVals[0]);
 
-    mintest->print();
-
     net.feedForward(mintest);
     mresult = net.getResults();
 
     mresult->print();
-
-    cout << "DIM: " << mresult->nbr << " X " << mresult->nbc <<endl; ;
 
     return 0;
 }

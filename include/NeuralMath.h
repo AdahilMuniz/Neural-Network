@@ -1,5 +1,3 @@
-//@TODO: Verify why sigmoid is not working
-
 #include <math.h>
 
 namespace NeuralMath{
@@ -17,7 +15,8 @@ namespace NeuralMath{
     }
 
     inline double hipTanDerivative(const double &x){
-        return 1.0 - x * x;
+        //return 1.0 - x * x;
+        return 1.0 - pow(tanh(x), 2);
     }
 
 
