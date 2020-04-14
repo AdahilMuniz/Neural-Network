@@ -20,6 +20,6 @@ If the Project name is not provided its name will be "neural_network"
 The example which we will run here is the "xor" one, an application responsible to emulate a xor logic port.
 
 > make $PROJ_NAME=xor $APP_FILE=./examples/xor/xor.cpp
-> ./xor ./examples/xor/xor.txt
+> ./xor ./examples/xor/xor.txt ./examples/xor/xor_test.txt 1000
 
-To run this example we need to provide the training data input file as an argument located in the same directory as the code.
+To run this example we need to provide the training data input file path, the test input file path and the number of epochs as arguments.
